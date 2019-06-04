@@ -28,43 +28,34 @@ answer = int(input('Выберите 1.Войти 2.Создать аккаун�
 global start_base
 
 def Login():
-
-    start_base = ''
     print('Вход')
-
-
-#Открытие файла
+    #Открытие файла
     base_file_read = open('base2.txt','r')
     text = ''
     login = Encryption(input('Введите логин: \n->:'))
-    for line in base_file_read:
-        text = line.split(sep=".")
-        while login != '':
-            if str(text[0]) == str(login):
+    for line in base_file_read: # Каждая линия считывается отдельно
+        text = line.split(sep=".") # разделя строку на значения в обьект
+        while login != '':  # !!! Вот этот цикл надо изменить
+            if str(text[0]) == str(login): # Проверка на сходство логина на клиенте и в базе
                 password = Encryption(input('Введите пароль ->:'))
-                if password == text[1]:
-                    Unknow()
+                if password == text[1]:# Проверка пароля
+                    Unknow() # Это моя функция для перехода в основное меню(с ней проблем нет)
                     break
-                elif str(password) == 'exit':
+                elif str(password) == 'exit': # Выход из условия если введено exit
                     break
-                else:
-                    print(str(text[1]))
-                    print(password)
-            elif 'exit' == str(Decipher(login)):
+            elif 'exit' == str(Decipher(login)): # Завершение программы если введено exit
                 quit('exit')
-            else:
+            else: # Если неправильно введен логин. Заменяется значение логина и цикл повторяется
                 print('Неправильно введены данные')
-            login = Encryption(input('Введите логин: \n->:'))
-        start_base = start_base + line
+                login = Encryption(input('Введите логин: \n->:')) #
     base_file_read.close()
-    return start_base
 
 
 def Signup():
     base_file_read = open('base2.txt', 'r')
     start_base = base_file_read.read()
     base_file_read.close()
-    
+
     print('Создание нового пользователя')
     login = input('Введи логин \n->:')
     password = input('Введи пароль \n->:')
@@ -78,7 +69,7 @@ def Signup():
         base_file_write.write('\n'+word)
 
         base_file_write.close()
-
+    answer = int(input('Выберите 1.Войти 2.Создать аккаунт \n->:'))
 
 while answer != '':
     if answer == 1:
